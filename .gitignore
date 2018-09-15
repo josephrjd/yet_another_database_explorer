@@ -1,0 +1,14 @@
+__pycache__/
+
+# Django stuff:
+*.log
+db.sqlite3
+
+# PyCharm
+# https://www.jetbrains.com/pycharm/help/managing-projects-under-version-control.html
+.idea/
+
+*/migrations/*
+
+# Environment
+.env

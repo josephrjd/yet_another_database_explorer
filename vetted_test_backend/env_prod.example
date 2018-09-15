@@ -1,0 +1,2 @@
+SETTINGS_MODULE='core_app.prod'
+DEBUG=False
