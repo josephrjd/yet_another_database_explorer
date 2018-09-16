@@ -4,6 +4,6 @@ DEBUG=False
 DB_ENGINE='django.db.backends.postgresql'
 DATABASE_NAME='vetted_test'
 DATABASE_USER='postgres'
-DATABASE_PASSWORD='root'
+DATABASE_PASSWORD='Rooot'
 DATABASE_HOST='172.31.16.105'
 DATABASE_PORT=5432
