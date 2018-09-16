@@ -43,8 +43,8 @@ COPY supervisor-app.conf /etc/supervisor/conf.d/
 # COPY requirements.txt and RUN pip install BEFORE adding the rest of your code, this will cause Docker's caching mechanism
 # to prevent re-installing (all your) dependencies when you made a change a line or two in your app.
 
-COPY vetted_test_backend/requirements.txt /home/docker/code/app/
-RUN pip3 install -r /home/docker/code/app/requirements.txt
+COPY vetted_test_backend/requirements.txt /home/docker/code/vetted_test_backend/
+RUN pip3 install -r /home/docker/code/vetted_test_backend/requirements.txt
 
 # add (the rest of) our code
 COPY . /home/docker/code/
@@ -54,7 +54,7 @@ COPY . /home/docker/code/
 # RUN django-admin.py startproject website /home/docker/code/app/
 
 #This is to create .env file from env.example
-RUN cp /home/docker/code/app/env_prod.example /home/docker/code/app/.env
+RUN cp /home/docker/code/vetted_test_backend/env_prod.example /home/docker/code/vetted_test_backend/.env
 
 EXPOSE 80
 CMD ["/usr/bin/supervisord","-n"]

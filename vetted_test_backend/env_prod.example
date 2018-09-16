@@ -1,2 +1,9 @@
-SETTINGS_MODULE='core_app.prod'
+SETTINGS_MODULE='core_app.settings.prod'
 DEBUG=False
+
+DB_ENGINE='django.db.backends.postgresql'
+DATABASE_NAME='vetted_test'
+DATABASE_USER='postgres'
+DATABASE_PASSWORD='root'
+DATABASE_HOST='172.31.16.105'
+DATABASE_PORT=5432

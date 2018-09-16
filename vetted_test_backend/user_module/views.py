@@ -56,47 +56,50 @@ class UserAPIs(APIView):
     # Method GET
     def get(self, request, *args):
 
-        # Verifying the user
-        requester = decodeUser(request)
-        if requester is None:
-            responseContent = message_constants.FAILURE_MESSAGE
-            responseCode = status.HTTP_401_UNAUTHORIZED
-
-        else:
-            try:
-                try:
-                    # Trying to get query parameter
-                    userId = int(request.GET['user'])
-                except:
-                    userId = None
-
-                # getting user level info
-                requester = User.objects.filter(id=requester)[0]
-                userType = UserMapping.objects.filter(user=requester)
-
-                # if param not present - send all the list
-                if userId is None:
-
-                    # Return all the objects if user is admin
-                    if str(userType[0].userType) == message_constants.ADMIN:
-                        userIds = User.objects.values_list('id', flat=True)
-
-                    # Return all the objects under a company if user is company admin
-                    elif str(userType[0].userType) == message_constants.COMPANY_ADMIN:
-                        userIds = UserMapping.objects.filter(company = userType[0].company).values_list('user', flat=True)
-
-                    userObjects = get_users(userIds)
-
-                else:
-                    userObjects = get_user(userId)
-
-                responseContent = userObjects
-                responseCode = status.HTTP_200_OK
-
-            except:
+        try:
+            # Verifying the user
+            requester = decodeUser(request)
+            if requester is None:
                 responseContent = message_constants.FAILURE_MESSAGE
-                responseCode = status.HTTP_400_BAD_REQUEST
+                responseCode = status.HTTP_401_UNAUTHORIZED
 
+            else:
+                try:
+                    try:
+                        # Trying to get query parameter
+                        userId = int(request.GET['user'])
+                    except:
+                        userId = None
+
+                    # getting user level info
+                    requester = User.objects.filter(id=requester)[0]
+                    userType = UserMapping.objects.filter(user=requester)
+
+                    # if param not present - send all the list
+                    if userId is None:
+
+                        # Return all the objects if user is admin
+                        if str(userType[0].userType) == message_constants.ADMIN:
+                            userIds = User.objects.values_list('id', flat=True)
+
+                        # Return all the objects under a company if user is company admin
+                        elif str(userType[0].userType) == message_constants.COMPANY_ADMIN:
+                            userIds = UserMapping.objects.filter(company = userType[0].company).values_list('user', flat=True)
+
+                        userObjects = get_users(userIds)
+
+                    else:
+                        userObjects = get_user(userId)
+
+                    responseContent = userObjects
+                    responseCode = status.HTTP_200_OK
+
+                except:
+                    responseContent = message_constants.FAILURE_MESSAGE
+                    responseCode = status.HTTP_400_BAD_REQUEST
+        except Exception as e:
+            responseContent = {"erason" : str(e)}
+            responseCode = status.HTTP_400_BAD_REQUEST
         return JsonResponse(responseContent, status=responseCode, safe=False)
 
 
